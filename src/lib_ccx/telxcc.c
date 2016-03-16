@@ -1090,13 +1090,14 @@ void process_telx_packet(struct TeletextCtx *ctx, data_unit_t data_unit_id, tele
 				else
 					ctx->page_buffer.text[x26_row][x26_col] = telx_to_ucs2(data);
 			}
+			// ETS 300 706, chapter 12.3.4, Special case when * is addressed using X/26 packet it must be changed to @
 			if(mode == 0x10 && (row_address_group == NO))
 			{
 
 				if(data == 64)
 				{
 					remap_g0_charset(0);
-					ctx->page_buffer.text[x26_row][address] = 0x40;
+					ctx->page_buffer.text[x26_row][address] = 0x40; //0x40 is @.
 				}
 			}
 		}
